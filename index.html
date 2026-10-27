@@ -24,6 +24,7 @@
           ink:    '#000000',   // Negro — fondo base
           panel:  '#462312',   // Marrón Oscuro — paneles y superficies
           accent: '#9D623C',   // Marrón Medio — acentos, bordes, iconografía
+          sand:   '#D9A47C',   // Marrón claro — texto de acento pequeño (contraste AA sobre negro y sobre panel)
           paper:  '#FFFFFF'    // Blanco — texto principal
         },
         fontFamily: {
@@ -36,7 +37,7 @@
 </script>
 
 <style>
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
@@ -44,7 +45,8 @@
   body { background-color: #000000; }
 
   /* Visible focus ring para navegación por teclado — WCAG 2.2 AA */
-  a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible, summary:focus-visible,
+  input:focus-visible, select:focus-visible, textarea:focus-visible {
     outline: 2px solid #FFFFFF;
     outline-offset: 3px;
     border-radius: 2px;
@@ -116,6 +118,47 @@
     border-radius: 9999px;
     padding: 3px;
   }
+
+  /* Chips de certificaciones y tecnologías */
+  .chip {
+    display: inline-block;
+    border: 1px solid rgba(157,98,60,0.6);
+    padding: 0.15rem 0.55rem;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Formularios */
+  .field {
+    width: 100%;
+    background: #000000;
+    border: 1px solid rgba(157,98,60,0.7);
+    color: #FFFFFF;
+    padding: 0.6rem 0.75rem;
+  }
+  .field:focus { border-color: #FFFFFF; }
+
+  /* Recorrido */
+  .step-btn[aria-current="step"] {
+    background: #9D623C;
+    color: #FFFFFF;
+    border-color: #9D623C;
+  }
+
+  /* Artículos */
+  details > summary { cursor: pointer; list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(180deg); }
+
+  /* Organigrama */
+  .org-line { width: 2px; background: #9D623C; margin: 0 auto; }
+
+  .dashed { border-style: dashed !important; }
+
+  table.tt th, table.tt td { padding: 0.6rem 0.75rem; text-align: left; vertical-align: top; }
+  table.tt thead th { background: #462312; color: #FFFFFF; font-weight: 600; }
+  table.tt tbody tr { border-top: 1px solid rgba(157,98,60,0.35); }
 </style>
 </head>
 
@@ -135,34 +178,40 @@
         Triple T
       </a>
 
-      <nav aria-label="Navegación principal" class="hidden md:block">
-        <ul class="flex items-center gap-8 font-medium text-sm text-white/65">
+      <nav aria-label="Navegación principal" class="hidden lg:block">
+        <ul class="flex items-center gap-5 font-medium text-sm text-white/70">
           <li><a href="#nosotros" data-nav class="hover:text-paper transition-colors">Nosotros</a></li>
-          <li><a href="#valores" data-nav class="hover:text-paper transition-colors">Valores</a></li>
+          <li><a href="#capacidades" data-nav class="hover:text-paper transition-colors">Capacidades</a></li>
           <li><a href="#proyectos" data-nav class="hover:text-paper transition-colors">Proyectos</a></li>
+          <li><a href="#solucion" data-nav class="hover:text-paper transition-colors">Solución</a></li>
           <li><a href="#equipo" data-nav class="hover:text-paper transition-colors">Equipo</a></li>
-          <li><a href="#contacto" data-nav class="hover:text-paper transition-colors">Contacto</a></li>
+          <li><a href="#recursos" data-nav class="hover:text-paper transition-colors">Recursos</a></li>
+          <li><a href="#estado" data-nav class="hover:text-paper transition-colors">Estado</a></li>
+          <li><a href="#contacto" data-nav class="hover:text-paper transition-colors">Soporte y contacto</a></li>
         </ul>
       </nav>
 
-      <a href="#contacto" class="hidden md:inline-flex items-center gap-2 bg-accent text-white font-semibold text-sm px-4 py-2 hover:bg-[#B5744A] transition-colors">
+      <a href="#contacto" class="hidden xl:inline-flex items-center gap-2 bg-accent text-white font-semibold text-sm px-4 py-2 hover:bg-[#B5744A] transition-colors">
         Hablemos de tu proyecto
       </a>
 
-      <button id="menu-toggle" type="button" class="md:hidden text-paper text-xl w-10 h-10 flex items-center justify-center" aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menú de navegación">
+      <button id="menu-toggle" type="button" class="lg:hidden text-paper text-xl w-10 h-10 flex items-center justify-center" aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menú de navegación">
         <i class="fa-solid fa-bars" aria-hidden="true" id="menu-icon"></i>
       </button>
     </div>
   </div>
 
   <!-- Mobile menu -->
-  <nav id="mobile-menu" class="hidden md:hidden border-t border-accent/30 bg-ink" aria-label="Navegación móvil">
-    <ul class="flex flex-col px-5 py-4 gap-1 text-white/70 font-medium">
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-accent/30 bg-ink" aria-label="Navegación móvil">
+    <ul class="flex flex-col px-5 py-4 gap-1 text-white/75 font-medium">
       <li><a href="#nosotros" data-nav class="block py-2.5 hover:text-paper">Nosotros</a></li>
-      <li><a href="#valores" data-nav class="block py-2.5 hover:text-paper">Valores</a></li>
+      <li><a href="#capacidades" data-nav class="block py-2.5 hover:text-paper">Capacidades</a></li>
       <li><a href="#proyectos" data-nav class="block py-2.5 hover:text-paper">Proyectos</a></li>
+      <li><a href="#solucion" data-nav class="block py-2.5 hover:text-paper">Solución</a></li>
       <li><a href="#equipo" data-nav class="block py-2.5 hover:text-paper">Equipo</a></li>
-      <li><a href="#contacto" class="block mt-2 bg-accent text-white font-semibold px-4 py-2.5 text-center">Hablemos de tu proyecto</a></li>
+      <li><a href="#recursos" data-nav class="block py-2.5 hover:text-paper">Recursos</a></li>
+      <li><a href="#estado" data-nav class="block py-2.5 hover:text-paper">Estado</a></li>
+      <li><a href="#contacto" class="block mt-2 bg-accent text-white font-semibold px-4 py-2.5 text-center">Soporte y contacto</a></li>
     </ul>
   </nav>
 </header>
@@ -186,8 +235,8 @@
           <a href="#proyectos" class="inline-flex items-center gap-2 bg-accent text-white font-semibold px-6 py-3.5 hover:bg-[#B5744A] transition-colors">
             Ver casos de éxito
           </a>
-          <a href="#contacto" class="inline-flex items-center gap-2 border border-accent/60 text-paper font-semibold px-6 py-3.5 hover:border-paper transition-colors">
-            Conversemos
+          <a href="#recorrido" class="inline-flex items-center gap-2 border border-accent/60 text-paper font-semibold px-6 py-3.5 hover:border-paper transition-colors">
+            Recorrer la solución
           </a>
         </div>
       </div>
@@ -196,30 +245,30 @@
       <div class="bracket bg-panel p-6 sm:p-7" role="group" aria-label="Indicadores operacionales de Triple T">
         <div class="flex items-center justify-between mb-6">
           <span class="font-display text-xs text-white/70 tracking-wide">estado_operacional</span>
-          <span class="flex items-center gap-2 text-xs font-display text-paper">
-            <span class="w-2 h-2 rounded-full bg-accent inline-block" aria-hidden="true"></span>
-            en línea
-          </span>
+          <a href="#estado" class="flex items-center gap-2 text-xs font-display text-paper hover:underline">
+            <span id="hero-dot" class="w-2 h-2 rounded-full bg-accent inline-block" aria-hidden="true"></span>
+            <span id="hero-status">midiendo…</span>
+          </a>
         </div>
         <dl class="grid grid-cols-2 gap-x-6 gap-y-6">
           <div>
-            <dt class="text-white/65 text-xs mb-1">SLA mensual sostenido</dt>
+            <dt class="text-white/70 text-xs mb-1">SLA mensual sostenido</dt>
             <dd class="font-display font-bold text-2xl text-paper">99,95<span class="text-white/70">%</span></dd>
           </div>
           <div>
-            <dt class="text-white/65 text-xs mb-1">trayectoria</dt>
+            <dt class="text-white/70 text-xs mb-1">trayectoria</dt>
             <dd class="font-display font-bold text-2xl text-paper">4+<span class="text-white/70 text-base"> años</span></dd>
           </div>
           <div>
-            <dt class="text-white/65 text-xs mb-1">carga en flota gestionada</dt>
-            <dd class="font-display font-bold text-2xl text-paper">120<span class="text-white/70 text-base"> camiones</span></dd>
+            <dt class="text-white/70 text-xs mb-1">operación sin conexión</dt>
+            <dd class="font-display font-bold text-2xl text-paper">72<span class="text-white/70 text-base"> horas</span></dd>
           </div>
           <div>
-            <dt class="text-white/65 text-xs mb-1">fruta trazada / año</dt>
+            <dt class="text-white/70 text-xs mb-1">fruta trazada / año</dt>
             <dd class="font-display font-bold text-2xl text-paper">40.000<span class="text-white/70 text-base"> ton</span></dd>
           </div>
         </dl>
-        <p class="mt-6 pt-5 border-t border-accent/30 text-xs text-white/60">ISO 9001 · ISO/IEC 27001 · Zero Trust · Ley N° 21.719</p>
+        <p class="mt-6 pt-5 border-t border-accent/30 text-xs text-white/70">ISO 9001:2015 · ISO/IEC 27001:2022 · Microsoft Solutions Partner (Azure) · Ley N° 21.719</p>
       </div>
 
     </div>
@@ -227,60 +276,143 @@
 
   <!-- ============ SOBRE NOSOTROS ============ -->
   <section id="nosotros" aria-labelledby="nosotros-heading" class="py-20 sm:py-28 border-t border-accent/25">
-    <div class="max-w-6xl mx-auto px-5 sm:px-8 grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-14">
 
-      <div>
-        <h2 id="nosotros-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper leading-tight">
-          Nacimos frente a una brecha, no en una sala de juntas.
-        </h2>
-        <p class="mt-5 text-white/70">
-          A comienzos de 2022, en Valparaíso, Sean Jamen —ingeniero civil informático de la PUCV— reunió a un equipo de ocho ingenieros para responder a un mercado sin plataformas realmente preparadas para operar en la trinchera: baja conectividad, alta concurrencia y normativas exigentes.
-        </p>
+        <div>
+          <h2 id="nosotros-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper leading-tight">
+            Ingeniería de software para operaciones que no pueden detenerse.
+          </h2>
+          <p class="mt-5 text-white/70">
+            Tecnologías Triple T S.A. es una firma de ingeniería de software fundada a comienzos de 2022 en Valparaíso por Sean Jamen, ingeniero civil informático de la PUCV. Su giro principal es el diseño, desarrollo, implantación y operación de plataformas de misión crítica para los sectores agroindustrial y logístico: sistemas que funcionan con baja conectividad, alta concurrencia y normativas exigentes.
+          </p>
+          <dl class="mt-8 grid grid-cols-2 gap-5 text-sm">
+            <div class="border-l-2 border-accent pl-4">
+              <dt class="text-white/70">Sede central</dt>
+              <dd class="text-paper font-semibold">Pudeto 443, Valparaíso</dd>
+            </div>
+            <div class="border-l-2 border-accent pl-4">
+              <dt class="text-white/70">Proyectos en</dt>
+              <dd class="text-paper font-semibold">Regiones de Valparaíso, Metropolitana y del Maule</dd>
+            </div>
+            <div class="border-l-2 border-accent pl-4">
+              <dt class="text-white/70">Gerente General</dt>
+              <dd class="text-paper font-semibold">Javier Donetch</dd>
+            </div>
+            <div class="border-l-2 border-accent pl-4">
+              <dt class="text-white/70">Dotación</dt>
+              <dd class="text-paper font-semibold">9 ingenieros civiles informáticos</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div>
+          <h3 class="font-display font-semibold text-xl text-paper">Trayectoria</h3>
+          <ol class="mt-5 space-y-5 border-l border-accent/50 pl-6 text-white/70">
+            <li>
+              <p class="font-display text-sm text-sand">2022 · Fundación</p>
+              <p class="mt-1">Sean Jamen reúne a un equipo de ingenieros organizado en células especializadas: arquitectura de software distribuido, infraestructura híbrida y en la nube, ingeniería de datos, aseguramiento de calidad (QA), confiabilidad de sitios (SRE) y ciberseguridad.</p>
+            </li>
+            <li>
+              <p class="font-display text-sm text-sand">2023 · Primeros proyectos industriales</p>
+              <p class="mt-1">AgroEdge (registro fitosanitario y cosecha sin conexión) y FleetCore (telemetría y despacho de 120 camiones).</p>
+            </li>
+            <li>
+              <p class="font-display text-sm text-sand">2024–2025 · Misión crítica y certificaciones</p>
+              <p class="mt-1">Plataformas híbridas de trazabilidad e inocuidad con SLA de 99,95 % y 99,99 %. Certificación ISO 9001:2015 (Bureau Veritas) e ISO/IEC 27001:2022 (SGS Chile), con controles Zero Trust y protección de datos conforme a la Ley N° 21.719.</p>
+            </li>
+            <li>
+              <p class="font-display text-sm text-sand">2026 · Presente</p>
+              <p class="mt-1">Más de cuatro años de trayectoria ininterrumpida. Javier Donetch asume como Gerente General y representante legal, y el fundador, Sean Jamen, encabeza el área de datos.</p>
+            </li>
+          </ol>
+        </div>
       </div>
 
-      <div class="space-y-6 text-white/70">
-        <p>
-          Ese diagnóstico dio forma a la compañía y a su nombre. Desde el inicio, el equipo se organizó en células especializadas: arquitectura de software distribuido, infraestructura híbrida y en la nube, ingeniería de datos, aseguramiento de calidad (QA), confiabilidad de sitios (SRE) y ciberseguridad.
-        </p>
-        <p>
-          En 2023 llegaron los primeros proyectos de escala industrial en la zona centro-sur del país. Entre 2024 y 2025, la compañía maduró hacia cuentas de mayor complejidad, certificó su gestión bajo ISO 9001 e implementó formalmente su Sistema de Gestión de Seguridad de la Información bajo ISO/IEC 27001, con controles Zero Trust y protección de datos conforme a la Ley N° 21.719.
-        </p>
-        <p>
-          Hoy, en 2026, con más de cuatro años de trayectoria ininterrumpida, Triple T opera desde su sede central en Valparaíso con infraestructura de desarrollo y QA propia, procesando millones de registros críticos cada mes.
-        </p>
-      </div>
+      <!-- Certificaciones -->
+      <h3 id="certificaciones" class="mt-16 font-display font-semibold text-2xl text-paper">Certificaciones y acreditaciones vigentes</h3>
+      <div class="mt-6 grid md:grid-cols-3 gap-6">
 
+        <article class="bracket bg-panel p-6">
+          <i class="fa-solid fa-award text-sand text-xl" aria-hidden="true"></i>
+          <h4 class="font-display font-semibold text-paper mt-3">ISO 9001:2015</h4>
+          <p class="text-white/70 text-sm">Sistema de Gestión de Calidad</p>
+          <dl class="mt-4 space-y-2 text-sm">
+            <div><dt class="text-white/70 inline">Organismo: </dt><dd class="text-paper inline">Bureau Veritas Certification</dd></div>
+            <div><dt class="text-white/70 inline">Alcance: </dt><dd class="text-paper inline">Diseño, desarrollo, implementación, mantenimiento y soporte de plataformas de software de misión crítica</dd></div>
+            <div><dt class="text-white/70 inline">Vigencia: </dt><dd class="text-paper inline">15-03-2024 al 14-03-2027</dd></div>
+            <div><dt class="text-white/70 inline">Código: </dt><dd class="text-paper inline font-mono">BV-CL-9001-2024-8842</dd></div>
+          </dl>
+        </article>
+
+        <article class="bracket bg-panel p-6">
+          <i class="fa-solid fa-shield-halved text-sand text-xl" aria-hidden="true"></i>
+          <h4 class="font-display font-semibold text-paper mt-3">ISO/IEC 27001:2022</h4>
+          <p class="text-white/70 text-sm">Sistema de Gestión de Seguridad de la Información</p>
+          <dl class="mt-4 space-y-2 text-sm">
+            <div><dt class="text-white/70 inline">Organismo: </dt><dd class="text-paper inline">SGS Chile</dd></div>
+            <div><dt class="text-white/70 inline">Alcance: </dt><dd class="text-paper inline">Sistemas de desarrollo, infraestructura de nube, bases de datos y redes para operaciones logísticas y agroindustriales, incluido el cumplimiento de la Ley N° 21.719</dd></div>
+            <div><dt class="text-white/70 inline">Vigencia: </dt><dd class="text-paper inline">10-01-2024 al 09-01-2027</dd></div>
+            <div><dt class="text-white/70 inline">Código: </dt><dd class="text-paper inline font-mono">SGS-CL-27001-2024-3319</dd></div>
+          </dl>
+        </article>
+
+        <article class="bracket bg-panel p-6">
+          <i class="fa-brands fa-microsoft text-sand text-xl" aria-hidden="true"></i>
+          <h4 class="font-display font-semibold text-paper mt-3">Microsoft Solutions Partner</h4>
+          <p class="text-white/70 text-sm">for Infrastructure (Azure) · Microsoft AI Cloud Partner Program</p>
+          <dl class="mt-4 space-y-2 text-sm">
+            <div><dt class="text-white/70 inline">Región primaria: </dt><dd class="text-paper inline">Azure Chile Central (Santiago)</dd></div>
+            <div><dt class="text-white/70 inline">Recuperación ante desastres: </dt><dd class="text-paper inline">Azure Brazil South (São Paulo)</dd></div>
+            <div><dt class="text-white/70 inline">Respaldo: </dt><dd class="text-paper inline">3 profesionales Azure Solutions Architect Expert</dd></div>
+            <div><dt class="text-white/70 inline">ID de partner: </dt><dd class="text-paper inline font-mono">9876543</dd></div>
+          </dl>
+        </article>
+
+      </div>
     </div>
   </section>
 
-  <!-- ============ VALORES ============ -->
+  <!-- ============ MISIÓN, VISIÓN Y VALORES ============ -->
   <section id="valores" aria-labelledby="valores-heading" class="py-20 sm:py-28 border-t border-accent/25 bg-panel/25">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
       <h2 id="valores-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-xl">
-        Tres pilares grabados en cada línea de código.
+        Misión, visión y tres pilares en cada línea de código.
       </h2>
 
-      <div class="mt-12 grid sm:grid-cols-3 gap-6">
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        <div class="border-l-2 border-accent pl-6">
+          <h3 class="font-display font-semibold text-lg text-paper">Misión</h3>
+          <p class="mt-2 text-white/70">Proveer soluciones de ingeniería de software de alto rendimiento y arquitectura distribuida, resolviendo brechas críticas de conectividad, trazabilidad y operación continua para la industria nacional, garantizando tolerancia a fallos y seguridad de la información.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-6">
+          <h3 class="font-display font-semibold text-lg text-paper">Visión</h3>
+          <p class="mt-2 text-white/70">Consolidarnos como el socio tecnológico de referencia a nivel nacional e internacional en el desarrollo de plataformas de misión crítica para los sectores logístico y agroindustrial.</p>
+        </div>
+      </div>
+
+      <h3 class="mt-14 font-display font-semibold text-xl text-paper">Valores</h3>
+      <div class="mt-6 grid sm:grid-cols-3 gap-6">
 
         <div class="bracket bg-ink p-7">
           <i class="fa-solid fa-microchip text-accent text-2xl" aria-hidden="true"></i>
-          <h3 class="font-display font-semibold text-xl text-paper mt-5">Talento</h3>
+          <h4 class="font-display font-semibold text-xl text-paper mt-5">Talento</h4>
           <p class="mt-3 text-white/70 text-sm">
-            Excelencia en ingeniería para diseñar soluciones robustas, escalables y eficientes, sostenidas por un equipo de ingenieros civiles informáticos con dedicación exclusiva.
+            Excelencia en ingeniería para el diseño de soluciones robustas, escalables y eficientes, sostenidas por un equipo de ingenieros civiles informáticos con dedicación exclusiva.
           </p>
         </div>
 
         <div class="bracket bg-ink p-7">
           <i class="fa-solid fa-shield-heart text-accent text-2xl" aria-hidden="true"></i>
-          <h3 class="font-display font-semibold text-xl text-paper mt-5">Tenacidad</h3>
+          <h4 class="font-display font-semibold text-xl text-paper mt-5">Tenacidad</h4>
           <p class="mt-3 text-white/70 text-sm">
-            Garantía de operación continua y resiliente bajo condiciones adversas, sostenida por áreas propias de QA y confiabilidad de sitios (SRE).
+            Garantía de operación continua y resiliente bajo condiciones adversas y de misión crítica, sostenida por áreas propias de QA y confiabilidad de sitios (SRE).
           </p>
         </div>
 
         <div class="bracket bg-ink p-7">
           <i class="fa-solid fa-lock text-accent text-2xl" aria-hidden="true"></i>
-          <h3 class="font-display font-semibold text-xl text-paper mt-5">Transparencia</h3>
+          <h4 class="font-display font-semibold text-xl text-paper mt-5">Transparencia</h4>
           <p class="mt-3 text-white/70 text-sm">
             Protección integral y manejo ético de los datos bajo el estándar ISO/IEC 27001 y políticas Zero Trust, aplicadas desde la arquitectura misma del sistema.
           </p>
@@ -290,67 +422,470 @@
     </div>
   </section>
 
+  <!-- ============ CAPACIDADES ============ -->
+  <section id="capacidades" aria-labelledby="capacidades-heading" class="py-20 sm:py-28 border-t border-accent/25">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <h2 id="capacidades-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-2xl">
+        Capacidades técnicas instaladas.
+      </h2>
+
+      <!-- Servicios -->
+      <h3 class="mt-12 font-display font-semibold text-xl text-paper">Servicios y soluciones</h3>
+      <ul class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <li class="bracket bg-panel p-6">
+          <i class="fa-solid fa-diagram-project text-sand" aria-hidden="true"></i>
+          <p class="mt-3 font-semibold text-paper">Arquitecturas híbridas y distribuidas</p>
+          <p class="mt-1 text-sm text-white/70">Núcleo en nube pública con componentes de borde en planta que operan 24 horas sin enlace.</p>
+        </li>
+        <li class="bracket bg-panel p-6">
+          <i class="fa-solid fa-mobile-screen-button text-sand" aria-hidden="true"></i>
+          <p class="mt-3 font-semibold text-paper">Aplicaciones de terreno offline-first</p>
+          <p class="mt-1 text-sm text-white/70">Registro cifrado en el dispositivo, 72 horas sin señal y sincronización determinista sin pérdida de datos.</p>
+        </li>
+        <li class="bracket bg-panel p-6">
+          <i class="fa-solid fa-sitemap text-sand" aria-hidden="true"></i>
+          <p class="mt-3 font-semibold text-paper">Trazabilidad y genealogía de lotes</p>
+          <p class="mt-1 text-sm text-white/70">Rastreo hacia adelante y hacia atrás con mezcla de orígenes, aptitud por mercado y retiros acotados.</p>
+        </li>
+        <li class="bracket bg-panel p-6">
+          <i class="fa-solid fa-plug text-sand" aria-hidden="true"></i>
+          <p class="mt-3 font-semibold text-paper">Integración con sistemas y equipos</p>
+          <p class="mt-1 text-sm text-white/70">Sistemas heredados, contabilidad, básculas, PLC, laboratorios y estaciones meteorológicas mediante APIs y capa anticorrupción.</p>
+        </li>
+        <li class="bracket bg-panel p-6">
+          <i class="fa-solid fa-user-shield text-sand" aria-hidden="true"></i>
+          <p class="mt-3 font-semibold text-paper">Ciberseguridad y protección de datos</p>
+          <p class="mt-1 text-sm text-white/70">Controles ISO/IEC 27001, arquitectura Zero Trust y cumplimiento de la Ley N° 21.719.</p>
+        </li>
+        <li class="bracket bg-panel p-6">
+          <i class="fa-solid fa-heart-pulse text-sand" aria-hidden="true"></i>
+          <p class="mt-3 font-semibold text-paper">Operación, soporte y SRE</p>
+          <p class="mt-1 text-sm text-white/70">Mesa de ayuda, monitoreo continuo, gestión de incidentes ITIL 4 y recuperación ante desastres probada.</p>
+        </li>
+      </ul>
+
+      <div class="mt-14 grid lg:grid-cols-2 gap-10">
+        <!-- Stack -->
+        <div>
+          <h3 class="font-display font-semibold text-xl text-paper">Conjunto tecnológico dominado</h3>
+          <dl class="mt-6 space-y-4 text-sm">
+            <div>
+              <dt class="text-white/70 mb-2">Nube y plataforma</dt>
+              <dd class="flex flex-wrap gap-2"><span class="chip">Microsoft Azure</span><span class="chip">Azure Kubernetes Service (AKS)</span><span class="chip">Azure Front Door</span><span class="chip">Azure Blob Storage</span><span class="chip">Azure Monitor</span></dd>
+            </div>
+            <div>
+              <dt class="text-white/70 mb-2">Datos y mensajería</dt>
+              <dd class="flex flex-wrap gap-2"><span class="chip">PostgreSQL</span><span class="chip">Neo4j</span><span class="chip">Apache Kafka (Confluent)</span><span class="chip">SQLite cifrado en dispositivo</span></dd>
+            </div>
+            <div>
+              <dt class="text-white/70 mb-2">Desarrollo</dt>
+              <dd class="flex flex-wrap gap-2"><span class="chip">.NET</span><span class="chip">Kotlin (Android)</span><span class="chip">Angular / TypeScript</span></dd>
+            </div>
+            <div>
+              <dt class="text-white/70 mb-2">Borde de planta</dt>
+              <dd class="flex flex-wrap gap-2"><span class="chip">K3s</span><span class="chip">Gateways locales</span><span class="chip">Integración con básculas y PLC</span></dd>
+            </div>
+            <div>
+              <dt class="text-white/70 mb-2">APIs, identidad y seguridad</dt>
+              <dd class="flex flex-wrap gap-2"><span class="chip">Kong Gateway</span><span class="chip">Keycloak (OIDC / OAuth 2.1)</span><span class="chip">Microsoft Sentinel</span><span class="chip">Microsoft Defender</span><span class="chip">Fortinet FortiGate</span></dd>
+            </div>
+            <div>
+              <dt class="text-white/70 mb-2">DevOps y calidad</dt>
+              <dd class="flex flex-wrap gap-2"><span class="chip">Azure DevOps</span><span class="chip">Terraform</span><span class="chip">SonarQube</span><span class="chip">Azure Load Testing</span><span class="chip">Azure Chaos Studio</span><span class="chip">Prometheus / Grafana</span></dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Alianzas -->
+        <div>
+          <h3 class="font-display font-semibold text-xl text-paper">Alianzas tecnológicas</h3>
+          <ul class="mt-6 space-y-4 text-sm text-white/70">
+            <li class="border-l-2 border-accent pl-4"><span class="text-paper font-semibold">Nube:</span> Microsoft Solutions Partner for Infrastructure (Azure), con operación en Azure Chile Central y recuperación ante desastres en Azure Brazil South.</li>
+            <li class="border-l-2 border-accent pl-4"><span class="text-paper font-semibold">Mensajería y datos:</span> Confluent (Apache Kafka administrado sobre Azure) y Neo4j (AuraDB para la genealogía de lotes).</li>
+            <li class="border-l-2 border-accent pl-4"><span class="text-paper font-semibold">APIs e identidad:</span> Kong (Kong Gateway Enterprise) y Red Hat (Keycloak como proveedor de identidad).</li>
+            <li class="border-l-2 border-accent pl-4"><span class="text-paper font-semibold">Ciberseguridad y redes:</span> socio integrador de Fortinet (FortiGate, FortiSwitch, túneles IPsec y ZTNA).</li>
+            <li class="border-l-2 border-accent pl-4"><span class="text-paper font-semibold">Hardware de terreno e industrial:</span> socio integrador de Zebra Technologies, Samsung, Advantech, Datalogic y Dell Technologies.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-14 grid lg:grid-cols-2 gap-10">
+        <!-- Metodologías -->
+        <div>
+          <h3 class="font-display font-semibold text-xl text-paper">Metodologías de trabajo certificadas</h3>
+          <div class="mt-6 overflow-x-auto">
+            <table class="tt w-full text-sm">
+              <caption class="sr-only">Metodologías de trabajo y certificaciones que las respaldan</caption>
+              <thead><tr><th scope="col">Ámbito</th><th scope="col">Marco</th><th scope="col">Certificación del equipo</th></tr></thead>
+              <tbody class="text-white/75">
+                <tr><td>Calidad</td><td>Sistema de gestión ISO 9001</td><td>Certificación institucional (Bureau Veritas)</td></tr>
+                <tr><td>Seguridad</td><td>SGSI ISO/IEC 27001, Zero Trust (NIST SP 800-207)</td><td>Certificación institucional (SGS Chile); CISSP, CISM</td></tr>
+                <tr><td>Gestión de proyectos</td><td>PMBOK con prácticas ágiles</td><td>PMP, PRINCE2 Practitioner, Professional Scrum Master I</td></tr>
+                <tr><td>Servicios TI</td><td>ITIL 4</td><td>ITIL 4 Foundation (6 profesionales)</td></tr>
+                <tr><td>Gobierno de TI</td><td>COBIT 2019</td><td>COBIT 2019 Foundation (2 profesionales)</td></tr>
+                <tr><td>Pruebas</td><td>ISTQB</td><td>ISTQB Foundation y Advanced Test Management</td></tr>
+                <tr><td>Requerimientos y cambio</td><td>BABOK, Prosci ADKAR</td><td>CBAP, Prosci Certified Change Practitioner</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Infraestructura -->
+        <div>
+          <h3 class="font-display font-semibold text-xl text-paper">Infraestructura y capacidad instalada</h3>
+          <ul class="mt-6 space-y-4 text-sm text-white/70">
+            <li class="flex gap-3"><i class="fa-solid fa-building text-sand mt-1" aria-hidden="true"></i><span>Sede central en Pudeto 443, Valparaíso, con equipo de dedicación exclusiva de 9 ingenieros civiles informáticos.</span></li>
+            <li class="flex gap-3"><i class="fa-solid fa-cloud text-sand mt-1" aria-hidden="true"></i><span>Ambientes propios de desarrollo, QA y preproducción sobre Azure, creados desde código con Terraform.</span></li>
+            <li class="flex gap-3"><i class="fa-solid fa-flask text-sand mt-1" aria-hidden="true"></i><span>Banco de pruebas de borde con simuladores de PLC, básculas e instrumentos, y clúster de borde para ensayar cortes de enlace de 24 horas.</span></li>
+            <li class="flex gap-3"><i class="fa-solid fa-tablet-screen-button text-sand mt-1" aria-hidden="true"></i><span>Laboratorio de dispositivos de terreno para pruebas de uso con guantes, humedad y operación sin señal.</span></li>
+            <li class="flex gap-3"><i class="fa-solid fa-gauge-high text-sand mt-1" aria-hidden="true"></i><span>Capacidad de operación con monitoreo continuo y atención de incidentes críticos 24×7×365.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ PROYECTOS ============ -->
-  <section id="proyectos" aria-labelledby="proyectos-heading" class="py-20 sm:py-28 border-t border-accent/25">
+  <section id="proyectos" aria-labelledby="proyectos-heading" class="py-20 sm:py-28 border-t border-accent/25 bg-panel/25">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
       <h2 id="proyectos-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-xl">
         Plataformas operando en campo, planta y carretera.
       </h2>
+      <p class="mt-4 text-white/70 max-w-2xl">Cuatro proyectos de misión crítica ejecutados en los últimos cinco años como proveedor principal, todos en operación.</p>
 
       <div class="mt-12 grid md:grid-cols-2 gap-6">
 
         <article class="bracket bg-panel p-7">
-          <p class="font-display text-xs text-white/70 mb-2">Agrícola &amp; Frutícola Casablanca S.A.</p>
+          <p class="font-display text-xs text-white/70 mb-2">Agrícola &amp; Frutícola Casablanca S.A. · Agroindustria · 2023</p>
           <h3 class="font-display font-semibold text-xl text-paper">Proyecto AgroEdge</h3>
           <p class="mt-3 text-white/70 text-sm">
-            Registro de aplicaciones fitosanitarias y control de cosecha en 50 hectáreas de carozos y uva de mesa en la Región de Valparaíso. Arquitectura móvil con tolerancia a 48 horas de trabajo desconectado y sincronización determinista, eliminando las planillas manuales en más de 10 cuarteles.
+            Registro de aplicaciones fitosanitarias y control de cosecha en 50 hectáreas de carozos y uva de mesa en la Región de Valparaíso. Arquitectura móvil con tolerancia a 72 horas de trabajo desconectado y sincronización determinista, eliminando las planillas manuales en más de 10 cuarteles.
           </p>
+          <dl class="mt-5 grid grid-cols-3 gap-3 text-center border-t border-accent/30 pt-4">
+            <div><dt class="text-xs text-white/70">sin conexión</dt><dd class="font-display font-bold text-paper">72 h</dd></div>
+            <div><dt class="text-xs text-white/70">superficie</dt><dd class="font-display font-bold text-paper">50 ha</dd></div>
+            <div><dt class="text-xs text-white/70">cuarteles</dt><dd class="font-display font-bold text-paper">10+</dd></div>
+          </dl>
         </article>
 
         <article class="bracket bg-panel p-7">
-          <p class="font-display text-xs text-white/70 mb-2">Transportes &amp; Distribución TransQuilpué Ltda.</p>
+          <p class="font-display text-xs text-white/70 mb-2">Transportes &amp; Distribución TransQuilpué Ltda. · Logística · 2023</p>
           <h3 class="font-display font-semibold text-xl text-paper">Proyecto FleetCore</h3>
           <p class="mt-3 text-white/70 text-sm">
             Telemetría y despacho de carga terrestre con enlace satelital y móvil para una flota de 120 camiones en las regiones de Valparaíso y Metropolitana, integrando pesaje en básculas locales y reportería operativa continua.
           </p>
+          <dl class="mt-5 grid grid-cols-3 gap-3 text-center border-t border-accent/30 pt-4">
+            <div><dt class="text-xs text-white/70">disponibilidad</dt><dd class="font-display font-bold text-paper">99,9 %</dd></div>
+            <div><dt class="text-xs text-white/70">flota</dt><dd class="font-display font-bold text-paper">120</dd></div>
+            <div><dt class="text-xs text-white/70">regiones</dt><dd class="font-display font-bold text-paper">2</dd></div>
+          </dl>
         </article>
 
         <article class="bracket bg-panel p-7">
-          <p class="font-display text-xs text-white/70 mb-2">Frutícola del Valle Central S.A.</p>
+          <p class="font-display text-xs text-white/70 mb-2">Frutícola del Valle Central S.A. · Agroexportación · 2024–2025</p>
           <h3 class="font-display font-semibold text-xl text-paper">Trazabilidad para exportación</h3>
           <p class="mt-3 text-white/70 text-sm">
-            Trazabilidad lote a lote, control de recepción en patio y verificación de límites fitosanitarios para exportar más de 40.000 toneladas anuales a Norteamérica y Europa, con arquitectura híbrida y un SLA mensual de 99,95%.
+            Trazabilidad lote a lote, control de recepción en patio y verificación de límites fitosanitarios para exportar a Norteamérica y Europa. Arquitectura híbrida con núcleo en nube pública y gateways locales en 2 plantas de empaque, y recuperación ante desastres probada semestralmente.
           </p>
+          <dl class="mt-5 grid grid-cols-3 gap-3 text-center border-t border-accent/30 pt-4">
+            <div><dt class="text-xs text-white/70">SLA mensual</dt><dd class="font-display font-bold text-paper">99,95 %</dd></div>
+            <div><dt class="text-xs text-white/70">fruta / año</dt><dd class="font-display font-bold text-paper">40.000 t</dd></div>
+            <div><dt class="text-xs text-white/70">plantas</dt><dd class="font-display font-bold text-paper">2</dd></div>
+          </dl>
         </article>
 
         <article class="bracket bg-panel p-7">
-          <p class="font-display text-xs text-white/70 mb-2">Envases &amp; Procesos Industriales Maule S.A.</p>
+          <p class="font-display text-xs text-white/70 mb-2">Envases &amp; Procesos Industriales Maule S.A. · Agroindustria · 2024–2025</p>
           <h3 class="font-display font-semibold text-xl text-paper">Control de líneas e inocuidad</h3>
           <p class="mt-3 text-white/70 text-sm">
-            Control de líneas de envasado y gestión de calidad conforme a HACCP/BRC, con sensores en producción y bloqueo preventivo automatizado de lotes ante alertas analíticas en menos de 60 segundos.
+            Control de líneas de envasado y gestión de calidad conforme a HACCP/BRC, con arquitectura edge industrial y nube privada, sensores en producción y bloqueo preventivo automatizado de lotes ante alertas analíticas.
           </p>
+          <dl class="mt-5 grid grid-cols-3 gap-3 text-center border-t border-accent/30 pt-4">
+            <div><dt class="text-xs text-white/70">turnos críticos</dt><dd class="font-display font-bold text-paper">99,99 %</dd></div>
+            <div><dt class="text-xs text-white/70">respuesta</dt><dd class="font-display font-bold text-paper">&lt; 50 ms</dd></div>
+            <div><dt class="text-xs text-white/70">bloqueo de lote</dt><dd class="font-display font-bold text-paper">&lt; 60 s</dd></div>
+          </dl>
         </article>
 
+      </div>
+
+      <!-- Industrias y volumen -->
+      <div class="mt-14 grid lg:grid-cols-2 gap-10">
+        <div>
+          <h3 class="font-display font-semibold text-xl text-paper">Industrias atendidas</h3>
+          <ul class="mt-5 space-y-3 text-sm text-white/70">
+            <li class="flex gap-3"><i class="fa-solid fa-seedling text-sand mt-1" aria-hidden="true"></i><span><span class="text-paper font-semibold">Agroindustria y agroexportación (foco principal):</span> 3 de nuestros 4 proyectos. Campo, recepción, proceso, inocuidad, límites de residuos por mercado y exportación.</span></li>
+            <li class="flex gap-3"><i class="fa-solid fa-truck text-sand mt-1" aria-hidden="true"></i><span><span class="text-paper font-semibold">Logística y transporte de carga:</span> telemetría, despacho y pesaje.</span></li>
+            <li class="flex gap-3"><i class="fa-solid fa-industry text-sand mt-1" aria-hidden="true"></i><span><span class="text-paper font-semibold">Procesamiento y envasado de alimentos:</span> control de líneas e inocuidad HACCP/BRC.</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-xl text-paper">Volumen gestionado</h3>
+          <dl class="mt-5 grid grid-cols-2 gap-5">
+            <div class="bracket bg-ink p-5"><dt class="text-xs text-white/70">fruta trazada al año</dt><dd class="font-display font-bold text-2xl text-paper">40.000 t</dd></div>
+            <div class="bracket bg-ink p-5"><dt class="text-xs text-white/70">camiones monitoreados</dt><dd class="font-display font-bold text-2xl text-paper">120</dd></div>
+            <div class="bracket bg-ink p-5"><dt class="text-xs text-white/70">plantas de empaque</dt><dd class="font-display font-bold text-2xl text-paper">2</dd></div>
+            <div class="bracket bg-ink p-5"><dt class="text-xs text-white/70">registros críticos procesados</dt><dd class="font-display font-bold text-2xl text-paper">millones / mes</dd></div>
+          </dl>
+        </div>
       </div>
 
       <!-- Testimonios -->
       <h3 class="mt-16 font-display font-semibold text-2xl text-paper">Lo que dicen quienes operan con nosotros</h3>
       <div class="mt-6 grid sm:grid-cols-2 gap-6">
 
-        <blockquote class="border-l-2 border-accent pl-6 py-1">
-          <p class="text-paper text-lg leading-snug">
+        <figure class="border-l-2 border-accent pl-6 py-1">
+          <blockquote class="text-paper text-lg leading-snug">
             "El sistema offline de Triple T erradicó el uso de planillas en nuestros campos, permitiendo una sincronización perfecta sin importar la conectividad. Son un aliado estratégico clave para nuestra transformación digital."
-          </p>
-          <footer class="mt-4 text-sm text-white/65">Gerencia de Operaciones Agrícolas — Agrícola &amp; Frutícola Casablanca S.A.</footer>
-        </blockquote>
+          </blockquote>
+          <figcaption class="mt-4 text-sm text-white/70">
+            Juan Steinhardt, Gerencia de Operaciones Agrícolas — Agrícola &amp; Frutícola Casablanca S.A.
+            <span class="block mt-1 text-xs"><i class="fa-solid fa-circle-check text-sand" aria-hidden="true"></i> Publicado con autorización escrita del cliente.</span>
+          </figcaption>
+        </figure>
 
-        <blockquote class="border-l-2 border-accent pl-6 py-1">
-          <p class="text-paper text-lg leading-snug">
+        <figure class="border-l-2 border-accent pl-6 py-1">
+          <blockquote class="text-paper text-lg leading-snug">
             "La plataforma de trazabilidad lote a lote implementada por Triple T nos asegura el cumplimiento de normativas de inocuidad para exportación. Su SLA del 99,95% se ha cumplido a cabalidad, brindando total tranquilidad en plena temporada de cosecha."
-          </p>
-          <footer class="mt-4 text-sm text-white/65">Dirección de Tecnología de la Información — Frutícola del Valle Central S.A.</footer>
-        </blockquote>
+          </blockquote>
+          <figcaption class="mt-4 text-sm text-white/70">
+            María José Soto, Directora de Tecnología de la Información — Frutícola del Valle Central S.A.
+            <span class="block mt-1 text-xs"><i class="fa-solid fa-circle-check text-sand" aria-hidden="true"></i> Publicado con autorización escrita del cliente.</span>
+          </figcaption>
+        </figure>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOLUCIÓN: RECORRIDO + ESTIMADOR ============ -->
+  <section id="solucion" aria-labelledby="solucion-heading" class="py-20 sm:py-28 border-t border-accent/25">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <h2 id="solucion-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-2xl">
+        Del huerto al contenedor, sin perder el origen.
+      </h2>
+
+      <!-- Recorrido virtual -->
+      <div id="recorrido" class="mt-12">
+        <h3 class="font-display font-semibold text-2xl text-paper">Recorrido virtual de la solución</h3>
+        <p class="mt-3 text-white/70 max-w-2xl">Seis estaciones de nuestra plataforma de trazabilidad agroindustrial. Elige una etapa o avanza con los botones para ver qué hace el usuario, qué registra el sistema y qué tecnología lo sostiene.</p>
+
+        <ol class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" aria-label="Etapas del recorrido">
+          <li><button type="button" class="step-btn w-full border border-accent/60 px-3 py-2.5 text-sm text-left text-white/80 hover:border-paper" data-step="0"><span class="font-display text-xs block">01</span>Campo</button></li>
+          <li><button type="button" class="step-btn w-full border border-accent/60 px-3 py-2.5 text-sm text-left text-white/80 hover:border-paper" data-step="1"><span class="font-display text-xs block">02</span>Recepción</button></li>
+          <li><button type="button" class="step-btn w-full border border-accent/60 px-3 py-2.5 text-sm text-left text-white/80 hover:border-paper" data-step="2"><span class="font-display text-xs block">03</span>Laboratorio</button></li>
+          <li><button type="button" class="step-btn w-full border border-accent/60 px-3 py-2.5 text-sm text-left text-white/80 hover:border-paper" data-step="3"><span class="font-display text-xs block">04</span>Proceso y mezcla</button></li>
+          <li><button type="button" class="step-btn w-full border border-accent/60 px-3 py-2.5 text-sm text-left text-white/80 hover:border-paper" data-step="4"><span class="font-display text-xs block">05</span>Destino y despacho</button></li>
+          <li><button type="button" class="step-btn w-full border border-accent/60 px-3 py-2.5 text-sm text-left text-white/80 hover:border-paper" data-step="5"><span class="font-display text-xs block">06</span>Origen y retiro</button></li>
+        </ol>
+
+        <div id="tour-panels" class="mt-6" aria-live="polite">
+
+          <article class="tour-panel bracket bg-panel p-6 sm:p-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8" data-panel="0">
+            <div>
+              <p class="font-display text-xs text-white/70">Etapa 01 de 06</p>
+              <h4 class="font-display font-semibold text-xl text-paper mt-1">Campo: registro de la aplicación sin señal</h4>
+              <dl class="mt-5 space-y-4 text-sm">
+                <div><dt class="text-sand font-semibold">Qué hace el usuario</dt><dd class="text-white/75 mt-1">El aplicador registra producto, dosis y cuartel en su dispositivo en el momento de la aplicación, aunque no haya cobertura.</dd></div>
+                <div><dt class="text-sand font-semibold">Qué registra el sistema</dt><dd class="text-white/75 mt-1">El registro queda cifrado en el dispositivo con marca de tiempo. Al recuperar señal se sincroniza sin duplicar ni perder datos, y el cuartel queda bloqueado para cosecha durante el período de carencia.</dd></div>
+                <div><dt class="text-sand font-semibold">Tecnología</dt><dd class="mt-2 flex flex-wrap gap-2"><span class="chip">Kotlin</span><span class="chip">SQLite cifrado</span><span class="chip">72 h sin conexión</span></dd></div>
+              </dl>
+            </div>
+            <div class="bg-ink border border-accent/40 p-5 font-mono text-xs text-white/80" aria-label="Vista simulada de la pantalla del aplicador" role="img">
+              <p class="text-sand">● sin señal · 3 registros por sincronizar</p>
+              <p class="mt-4">Cuartel ........ C-14 Nogales</p>
+              <p>Producto ....... Fungicida A</p>
+              <p>Dosis .......... 1,2 L/ha</p>
+              <p>Hora ........... 07:42</p>
+              <p class="mt-4 border-t border-accent/40 pt-3">Carencia ....... 14 días</p>
+              <p>Cosecha ........ <span class="text-sand">bloqueada hasta el día 15</span></p>
+            </div>
+          </article>
+
+          <article class="tour-panel bracket bg-panel p-6 sm:p-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8" data-panel="1">
+            <div>
+              <p class="font-display text-xs text-white/70">Etapa 02 de 06</p>
+              <h4 class="font-display font-semibold text-xl text-paper mt-1">Recepción: el camión llega con su origen</h4>
+              <dl class="mt-5 space-y-4 text-sm">
+                <div><dt class="text-sand font-semibold">Qué hace el usuario</dt><dd class="text-white/75 mt-1">El operador de recepción lee la guía y pesa el camión en la báscula, sin digitar el peso.</dd></div>
+                <div><dt class="text-sand font-semibold">Qué registra el sistema</dt><dd class="text-white/75 mt-1">Crea el lote de recepción vinculado a los cuarteles de origen y a sus aplicaciones. La planta sigue recibiendo aunque se corte el enlace con la nube.</dd></div>
+                <div><dt class="text-sand font-semibold">Tecnología</dt><dd class="mt-2 flex flex-wrap gap-2"><span class="chip">Borde K3s en planta</span><span class="chip">Integración con báscula</span><span class="chip">24 h sin enlace</span></dd></div>
+              </dl>
+            </div>
+            <div class="bg-ink border border-accent/40 p-5 font-mono text-xs text-white/80" aria-label="Vista simulada de la pantalla de recepción" role="img">
+              <p class="text-sand">● planta en línea · báscula 1</p>
+              <p class="mt-4">Patente ........ KX-PR-21</p>
+              <p>Peso neto ...... 11.840 kg</p>
+              <p>Origen ......... 3 cuarteles · 1 productor</p>
+              <p>Lote ........... REC-2026-0412</p>
+              <p class="mt-4 border-t border-accent/40 pt-3">Tiempo de atención .. 4 min 20 s</p>
+            </div>
+          </article>
+
+          <article class="tour-panel bracket bg-panel p-6 sm:p-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8" data-panel="2">
+            <div>
+              <p class="font-display text-xs text-white/70">Etapa 03 de 06</p>
+              <h4 class="font-display font-semibold text-xl text-paper mt-1">Laboratorio: el resultado condiciona el lote</h4>
+              <dl class="mt-5 space-y-4 text-sm">
+                <div><dt class="text-sand font-semibold">Qué hace el usuario</dt><dd class="text-white/75 mt-1">Calidad recibe los análisis de residuos del laboratorio externo sin transcribirlos.</dd></div>
+                <div><dt class="text-sand font-semibold">Qué registra el sistema</dt><dd class="text-white/75 mt-1">Asocia cada resultado al lote y actualiza su estado analítico. Un lote sin resultado o fuera de límite no avanza a despacho.</dd></div>
+                <div><dt class="text-sand font-semibold">Tecnología</dt><dd class="mt-2 flex flex-wrap gap-2"><span class="chip">API de laboratorio</span><span class="chip">Kafka</span><span class="chip">PostgreSQL</span></dd></div>
+              </dl>
+            </div>
+            <div class="bg-ink border border-accent/40 p-5 font-mono text-xs text-white/80" aria-label="Vista simulada del estado analítico de un lote" role="img">
+              <p class="text-sand">● REC-2026-0412 · estado analítico</p>
+              <p class="mt-4">Muestra ........ M-88213</p>
+              <p>Residuo A ...... 0,08 mg/kg</p>
+              <p>Residuo B ...... no detectado</p>
+              <p class="mt-4 border-t border-accent/40 pt-3">Estado ......... <span class="text-sand">liberado con restricciones</span></p>
+            </div>
+          </article>
+
+          <article class="tour-panel bracket bg-panel p-6 sm:p-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8" data-panel="3">
+            <div>
+              <p class="font-display text-xs text-white/70">Etapa 04 de 06</p>
+              <h4 class="font-display font-semibold text-xl text-paper mt-1">Proceso y mezcla: la genealogía no se pierde</h4>
+              <dl class="mt-5 space-y-4 text-sm">
+                <div><dt class="text-sand font-semibold">Qué hace el usuario</dt><dd class="text-white/75 mt-1">El jefe de planta mezcla lotes para cumplir calibre y color, como siempre.</dd></div>
+                <div><dt class="text-sand font-semibold">Qué registra el sistema</dt><dd class="text-white/75 mt-1">Cada mezcla agrega una relación al árbol de genealogía, con la proporción estimada de cada origen y el grado de confianza de esa estimación.</dd></div>
+                <div><dt class="text-sand font-semibold">Tecnología</dt><dd class="mt-2 flex flex-wrap gap-2"><span class="chip">Neo4j</span><span class="chip">Eventos de línea</span><span class="chip">Balance de masa</span></dd></div>
+              </dl>
+            </div>
+            <div class="bg-ink border border-accent/40 p-5 font-mono text-xs text-white/80" aria-label="Vista simulada del árbol de genealogía de un lote" role="img">
+              <p class="text-sand">● PRO-2026-1187 · genealogía</p>
+              <p class="mt-4">├─ REC-0412 ... 46 %</p>
+              <p>├─ REC-0409 ... 31 %</p>
+              <p>└─ REC-0398 ... 23 %</p>
+              <p class="mt-4 border-t border-accent/40 pt-3">Orígenes ....... 7 cuarteles</p>
+              <p>Confianza ...... alta</p>
+            </div>
+          </article>
+
+          <article class="tour-panel bracket bg-panel p-6 sm:p-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8" data-panel="4">
+            <div>
+              <p class="font-display text-xs text-white/70">Etapa 05 de 06</p>
+              <h4 class="font-display font-semibold text-xl text-paper mt-1">Destino y despacho: aptitud por mercado</h4>
+              <dl class="mt-5 space-y-4 text-sm">
+                <div><dt class="text-sand font-semibold">Qué hace el usuario</dt><dd class="text-white/75 mt-1">El área comercial asigna el contenedor a un cliente y un país de destino.</dd></div>
+                <div><dt class="text-sand font-semibold">Qué registra el sistema</dt><dd class="text-white/75 mt-1">Cruza las aplicaciones de todos los orígenes del lote con los límites máximos de residuos de cada mercado. Si el lote no es apto para ese destino, la compuerta de despacho lo impide y sugiere mercados aptos.</dd></div>
+                <div><dt class="text-sand font-semibold">Tecnología</dt><dd class="mt-2 flex flex-wrap gap-2"><span class="chip">Motor de reglas LMR</span><span class="chip">Compuerta de despacho</span></dd></div>
+              </dl>
+            </div>
+            <div class="bg-ink border border-accent/40 p-5 font-mono text-xs text-white/80" aria-label="Vista simulada de la evaluación de aptitud por mercado" role="img">
+              <p class="text-sand">● ENV-2026-5530 · aptitud por mercado</p>
+              <p class="mt-4">Mercado A ...... apto</p>
+              <p>Mercado B ...... apto</p>
+              <p>Mercado C ...... <span class="text-sand">no apto: residuo A</span></p>
+              <p class="mt-4 border-t border-accent/40 pt-3">Despacho a C .... bloqueado</p>
+            </div>
+          </article>
+
+          <article class="tour-panel bracket bg-panel p-6 sm:p-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-8" data-panel="5">
+            <div>
+              <p class="font-display text-xs text-white/70">Etapa 06 de 06</p>
+              <h4 class="font-display font-semibold text-xl text-paper mt-1">Origen y retiro: respuestas en minutos</h4>
+              <dl class="mt-5 space-y-4 text-sm">
+                <div><dt class="text-sand font-semibold">Qué hace el usuario</dt><dd class="text-white/75 mt-1">Ante una consulta del importador o un problema de inocuidad, calidad busca el lote afectado.</dd></div>
+                <div><dt class="text-sand font-semibold">Qué registra el sistema</dt><dd class="text-white/75 mt-1">Recorre el árbol hacia atrás hasta los cuarteles de origen y hacia adelante hasta los envases despachados, y acota el retiro al producto efectivamente afectado.</dd></div>
+                <div><dt class="text-sand font-semibold">Tecnología</dt><dd class="mt-2 flex flex-wrap gap-2"><span class="chip">Consulta de genealogía</span><span class="chip">Portal del importador</span></dd></div>
+              </dl>
+            </div>
+            <div class="bg-ink border border-accent/40 p-5 font-mono text-xs text-white/80" aria-label="Vista simulada de un rastreo de origen y retiro" role="img">
+              <p class="text-sand">● consulta de origen · ENV-2026-5530</p>
+              <p class="mt-4">Hacia atrás ..... 7 cuarteles · 3 productores</p>
+              <p>Hacia adelante .. 14 lotes de envasado</p>
+              <p>Tiempo .......... 2 min 10 s</p>
+              <p class="mt-4 border-t border-accent/40 pt-3">Retiro acotado .. 6 t de 96 t</p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="mt-5 flex items-center justify-between">
+          <button type="button" id="tour-prev" class="inline-flex items-center gap-2 border border-accent/60 px-4 py-2 text-sm hover:border-paper"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+          <button type="button" id="tour-next" class="inline-flex items-center gap-2 bg-accent text-white px-4 py-2 text-sm hover:bg-[#B5744A]">Siguiente <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+        </div>
+        <p class="mt-3 text-xs text-white/70">Las pantallas son representaciones simplificadas con datos de ejemplo.</p>
+      </div>
+
+      <!-- Estimador -->
+      <div id="estimador" class="mt-20">
+        <h3 class="font-display font-semibold text-2xl text-paper">Estimador de retorno para agroexportadoras</h3>
+        <p class="mt-3 text-white/70 max-w-3xl">Estima cuánto cuesta hoy a una agroexportadora no poder verificar el origen de sus lotes: contenedores rechazados por límites de residuos y retiros que no pueden acotarse. Los valores iniciales son de ejemplo; reemplázalos por los de tu operación.</p>
+
+        <form id="roi-form" class="mt-8 grid lg:grid-cols-[1.2fr_0.8fr] gap-8" novalidate>
+          <div class="grid sm:grid-cols-2 gap-5 text-sm">
+            <fieldset class="sm:col-span-2 border border-accent/40 p-5 grid sm:grid-cols-2 gap-4">
+              <legend class="px-2 font-display text-sand text-xs">Contenedores rechazados</legend>
+              <div>
+                <label for="r-rech" class="block text-white/80 mb-1">Rechazos de contenedor al año</label>
+                <input id="r-rech" class="field" type="number" min="0" step="0.1" value="1" inputmode="decimal">
+              </div>
+              <div>
+                <label for="r-usd" class="block text-white/80 mb-1">Costo directo por rechazo (US$)</label>
+                <input id="r-usd" class="field" type="number" min="0" step="1000" value="310000" inputmode="numeric">
+              </div>
+              <div>
+                <label for="r-tc" class="block text-white/80 mb-1">Tipo de cambio ($ por US$)</label>
+                <input id="r-tc" class="field" type="number" min="0" step="1" value="900" inputmode="numeric">
+              </div>
+              <div>
+                <label for="r-red" class="block text-white/80 mb-1">Rechazos evitados con verificación previa (%)</label>
+                <input id="r-red" class="field" type="number" min="0" max="100" step="1" value="80" inputmode="numeric" aria-describedby="r-red-h">
+                <p id="r-red-h" class="mt-1 text-xs text-white/70">Porción de rechazos que la compuerta por mercado habría impedido.</p>
+              </div>
+            </fieldset>
+
+            <fieldset class="sm:col-span-2 border border-accent/40 p-5 grid sm:grid-cols-2 gap-4">
+              <legend class="px-2 font-display text-sand text-xs">Retiros de producto</legend>
+              <div>
+                <label for="r-ret" class="block text-white/80 mb-1">Retiros al año</label>
+                <input id="r-ret" class="field" type="number" min="0" step="0.1" value="1" inputmode="decimal">
+              </div>
+              <div>
+                <label for="r-ton" class="block text-white/80 mb-1">Toneladas retiradas por evento</label>
+                <input id="r-ton" class="field" type="number" min="0" step="1" value="96" inputmode="numeric">
+              </div>
+              <div>
+                <label for="r-val" class="block text-white/80 mb-1">Costo por tonelada retirada ($)</label>
+                <input id="r-val" class="field" type="number" min="0" step="10000" value="6460000" inputmode="numeric">
+              </div>
+              <div>
+                <label for="r-conf" class="block text-white/80 mb-1">Producto conforme que se deja de retirar (%)</label>
+                <input id="r-conf" class="field" type="number" min="0" max="100" step="1" value="90" inputmode="numeric" aria-describedby="r-conf-h">
+                <p id="r-conf-h" class="mt-1 text-xs text-white/70">Parte del retiro que estaba sana y que la genealogía permite liberar.</p>
+              </div>
+            </fieldset>
+
+            <fieldset class="sm:col-span-2 border border-accent/40 p-5 grid sm:grid-cols-3 gap-4">
+              <legend class="px-2 font-display text-sand text-xs">Inversión (opcional)</legend>
+              <div>
+                <label for="r-inv" class="block text-white/80 mb-1">Inversión inicial ($)</label>
+                <input id="r-inv" class="field" type="number" min="0" step="1000000" placeholder="Ej.: 800000000" inputmode="numeric">
+              </div>
+              <div>
+                <label for="r-opex" class="block text-white/80 mb-1">Operación anual ($)</label>
+                <input id="r-opex" class="field" type="number" min="0" step="1000000" placeholder="Ej.: 150000000" inputmode="numeric">
+              </div>
+              <div>
+                <label for="r-anos" class="block text-white/80 mb-1">Horizonte (años)</label>
+                <input id="r-anos" class="field" type="number" min="1" max="10" step="1" value="3" inputmode="numeric">
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="bracket bg-panel p-6 h-fit" aria-live="polite">
+            <p class="font-display text-xs text-white/70">resultado_estimado</p>
+            <dl class="mt-4 space-y-4">
+              <div><dt class="text-xs text-white/70">Costo evitado en rechazos / año</dt><dd id="o-rech" class="font-display font-bold text-xl text-paper">—</dd></div>
+              <div><dt class="text-xs text-white/70">Costo evitado en retiros / año</dt><dd id="o-ret" class="font-display font-bold text-xl text-paper">—</dd></div>
+              <div class="border-t border-accent/40 pt-4"><dt class="text-xs text-white/70">Beneficio bruto anual</dt><dd id="o-total" class="font-display font-bold text-2xl text-paper">—</dd></div>
+              <div><dt class="text-xs text-white/70">Retorno sobre la inversión en el horizonte</dt><dd id="o-roi" class="font-display font-bold text-xl text-paper">—</dd></div>
+              <div><dt class="text-xs text-white/70">Período de recuperación</dt><dd id="o-pay" class="font-display font-bold text-xl text-paper">—</dd></div>
+            </dl>
+            <p class="mt-5 text-xs text-white/70">Retorno = (beneficio anual − costo de operación) × años − inversión, dividido por la inversión. No incluye multas, control reforzado de embarques ni pérdida de clientes, por lo que es una estimación conservadora.</p>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -358,78 +893,335 @@
   <!-- ============ EQUIPO ============ -->
   <section id="equipo" aria-labelledby="equipo-heading" class="py-20 sm:py-28 border-t border-accent/25 bg-panel/25">
     <div class="max-w-6xl mx-auto px-5 sm:px-8">
-      <h2 id="equipo-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-xl">
-        Nueve ingenieros, cinco direcciones, una operación.
+      <h2 id="equipo-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-2xl">
+        Nueve ingenieros, una gerencia y cuatro áreas.
       </h2>
       <p class="mt-4 text-white/70 max-w-2xl">Equipo base de dedicación exclusiva, todos ingenieros civiles informáticos formados en la Pontificia Universidad Católica de Valparaíso.</p>
 
-      <!-- CEO -->
-      <div class="mt-12 bracket bg-ink p-7 max-w-md">
-        <p class="font-display text-xs text-white/70 mb-2">Dirección Ejecutiva</p>
-        <h3 class="font-display font-semibold text-xl text-paper">Sean Jamen</h3>
-        <p class="text-white/70 text-sm mt-1">CEO &amp; Fundador</p>
-        <p class="mt-3 text-white/70 text-sm">Lidera la estrategia corporativa, la dirección general de proyectos y la interlocución formal con mandantes.</p>
+      <!-- Organigrama -->
+      <h3 class="mt-12 font-display font-semibold text-xl text-paper">Organigrama</h3>
+      <div class="mt-6" role="group" aria-label="Organigrama de Triple T">
+        <div class="max-w-sm mx-auto bracket bg-panel p-4 text-center">
+          <p class="font-display font-semibold text-paper">Gerencia General (CEO)</p>
+          <p class="text-sm text-white/75">Javier Donetch · representante legal</p>
+        </div>
+        <div class="org-line h-6" aria-hidden="true"></div>
+        <div class="max-w-sm mx-auto bracket bg-panel p-4 text-center">
+          <p class="font-display font-semibold text-paper">Jefatura de Proyecto</p>
+          <p class="text-sm text-white/75">Carlos Aguirre</p>
+        </div>
+        <div class="org-line h-6" aria-hidden="true"></div>
+        <ul class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t-2 border-accent pt-6">
+          <li class="border border-accent/50 bg-ink p-4">
+            <p class="font-display text-sm text-sand">Arquitectura, Ciberseguridad e Integración</p>
+            <p class="mt-2 text-sm text-paper">Javier Montoya</p>
+            <p class="text-sm text-paper">Javier Sepúlveda</p>
+          </li>
+          <li class="border border-accent/50 bg-ink p-4">
+            <p class="font-display text-sm text-sand">Datos y Desarrollo</p>
+            <p class="mt-2 text-sm text-paper">Sean Jamen</p>
+            <p class="text-sm text-paper">Luciano Fredes</p>
+          </li>
+          <li class="border border-accent/50 bg-ink p-4">
+            <p class="font-display text-sm text-sand">Funcional e Implantación</p>
+            <p class="mt-2 text-sm text-paper">Matthias Julio</p>
+            <p class="text-sm text-paper">Javier Donetch <span class="text-white/70">(implantación, dedicación parcial)</span></p>
+          </li>
+          <li class="border border-accent/50 bg-ink p-4">
+            <p class="font-display text-sm text-sand">Calidad y SRE</p>
+            <p class="mt-2 text-sm text-paper">Maura González</p>
+            <p class="text-sm text-paper">Ricardo Toro</p>
+          </li>
+        </ul>
       </div>
 
-      <!-- Direcciones -->
-      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Perfiles -->
+      <h3 class="mt-14 font-display font-semibold text-xl text-paper">Perfiles y currículos resumidos</h3>
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        <div class="bracket bg-ink p-6">
-          <p class="font-display text-xs text-white/70 mb-3">Arquitectura y Datos</p>
-          <p class="font-display font-semibold text-paper">Carlos Aguirre</p>
-          <p class="font-display font-semibold text-paper">Javier Donetch</p>
-          <p class="mt-3 text-white/70 text-sm">Modelos de datos complejos y arquitectura de sincronización asíncrona para sistemas desconectados.</p>
-        </div>
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Gerencia General</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Javier Donetch</h4>
+          <p class="text-sm text-white/75">Gerente General (CEO) · Implantación y Gestión del Cambio</p>
+          <p class="mt-3 text-sm text-white/70">Conduce la estrategia corporativa, ejerce la representación legal y lidera la relación institucional con los mandantes. Experiencia en gestión integral y puesta en marcha de plataformas de misión crítica para el sector productivo.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">Prosci CCP</span><span class="chip">PRINCE2 Practitioner</span><span class="chip">COBIT 2019</span><span class="chip">ITIL 4</span></p>
+        </article>
 
-        <div class="bracket bg-ink p-6">
-          <p class="font-display text-xs text-white/70 mb-3">Infraestructura y Redes</p>
-          <p class="font-display font-semibold text-paper">Matthias Julio</p>
-          <p class="font-display font-semibold text-paper">Luciano Fredes</p>
-          <p class="mt-3 text-white/70 text-sm">Despliegue continuo (CI/CD), orquestación de infraestructura contenerizada y redes de campo.</p>
-        </div>
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Jefatura de Proyecto</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Carlos Aguirre</h4>
+          <p class="text-sm text-white/75">Jefe de Proyecto</p>
+          <p class="mt-3 text-sm text-white/70">Dirigió como arquitecto los proyectos AgroEdge y Frutícola del Valle Central, con operación desconectada y alta disponibilidad contractual. Responsable de la oficina de gestión de proyectos y del cumplimiento de hitos.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">PMP</span><span class="chip">PSM I</span><span class="chip">Azure Solutions Architect Expert</span><span class="chip">ITIL 4</span></p>
+        </article>
 
-        <div class="bracket bg-ink p-6">
-          <p class="font-display text-xs text-white/70 mb-3">Ciberseguridad e Integración</p>
-          <p class="font-display font-semibold text-paper">Javier Sepúlveda</p>
-          <p class="font-display font-semibold text-paper">Javier Montoya</p>
-          <p class="mt-3 text-white/70 text-sm">Integración segura, cifrado en reposo para dispositivos móviles y controles bajo ISO 27001.</p>
-        </div>
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Arquitectura, Ciberseguridad e Integración</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Javier Montoya</h4>
+          <p class="text-sm text-white/75">Arquitecto de Solución y Líder de Integración</p>
+          <p class="mt-3 text-sm text-white/70">Especialista en arquitectura de software distribuido, sincronización asíncrona para sistemas desconectados e integración vía API con sistemas preexistentes.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">Azure Solutions Architect Expert</span><span class="chip">CISM</span></p>
+        </article>
 
-        <div class="bracket bg-ink p-6">
-          <p class="font-display text-xs text-white/70 mb-3">Calidad (QA) y SRE</p>
-          <p class="font-display font-semibold text-paper">Maura González</p>
-          <p class="font-display font-semibold text-paper">Ricardo Toro</p>
-          <p class="mt-3 text-white/70 text-sm">Matrices de pruebas de campo, QA automatizado y protocolos de respuesta ante caídas de enlace.</p>
-        </div>
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Arquitectura, Ciberseguridad e Integración</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Javier Sepúlveda</h4>
+          <p class="text-sm text-white/75">Encargado de Seguridad de la Información</p>
+          <p class="mt-3 text-sm text-white/70">Responsable de las capas de integración segura, el cifrado en reposo de dispositivos móviles y los controles ISO/IEC 27001 y Zero Trust.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">CISSP</span><span class="chip">Azure Security Engineer</span><span class="chip">COBIT 2019</span><span class="chip">ITIL 4</span></p>
+        </article>
+
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Datos y Desarrollo</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Sean Jamen</h4>
+          <p class="text-sm text-white/75">Líder de Datos · Fundador</p>
+          <p class="mt-3 text-sm text-white/70">Fundador de Triple T. Especialista en modelos de datos complejos, bases de datos relacionales y de grafos, y migración de datos para misiones críticas.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">EDB PostgreSQL Professional</span><span class="chip">Neo4j Certified Professional</span></p>
+        </article>
+
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Datos y Desarrollo</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Luciano Fredes</h4>
+          <p class="text-sm text-white/75">Líder de Desarrollo</p>
+          <p class="mt-3 text-sm text-white/70">Conduce la construcción de servicios contenerizados, la aplicación de terreno y los portales, y la automatización del despliegue continuo (CI/CD).</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">Azure Developer</span><span class="chip">DevOps Engineer Expert</span><span class="chip">EDB PostgreSQL Associate</span><span class="chip">ITIL 4</span></p>
+        </article>
+
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Funcional e Implantación</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Matthias Julio</h4>
+          <p class="text-sm text-white/75">Líder Funcional</p>
+          <p class="mt-3 text-sm text-white/70">Experiencia en terreno con procesos de aplicación fitosanitaria, cosecha, recepción y empaque en clientes agroexportadores; los traduce en requerimientos y casos de aceptación.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">CBAP</span><span class="chip">ISTQB CTFL</span><span class="chip">ITIL 4</span></p>
+        </article>
+
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Calidad y SRE</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Maura González</h4>
+          <p class="text-sm text-white/75">Líder de Calidad y Pruebas</p>
+          <p class="mt-3 text-sm text-white/70">Lidera la estandarización de matrices de pruebas de campo y el QA automatizado.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">ISTQB CTFL</span><span class="chip">ISTQB CTAL-TM</span></p>
+        </article>
+
+        <article class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">Calidad y SRE</p>
+          <h4 class="font-display font-semibold text-lg text-paper mt-1">Ricardo Toro</h4>
+          <p class="text-sm text-white/75">Líder de Operación / SRE</p>
+          <p class="mt-3 text-sm text-white/70">Especialista en orquestación contenerizada, redes de campo y protocolos de respuesta ante caídas de enlace y recuperación ante desastres.</p>
+          <p class="mt-4 flex flex-wrap gap-2"><span class="chip">ITIL 4</span><span class="chip">CKA</span><span class="chip">Azure Solutions Architect Expert</span></p>
+        </article>
 
       </div>
     </div>
   </section>
 
-  <!-- ============ CONTACTO ============ -->
-  <section id="contacto" aria-labelledby="contacto-heading" class="py-20 sm:py-28 border-t border-accent/25">
-    <div class="max-w-6xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <h2 id="contacto-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper">
-          ¿Tu operación necesita un sistema que no se detenga?
-        </h2>
-        <p class="mt-4 text-white/70 max-w-md">
-          Cuéntanos el desafío de tu faena, planta o flota. Respondemos desde Valparaíso a todo Chile.
-        </p>
+  <!-- ============ RECURSOS ============ -->
+  <section id="recursos" aria-labelledby="recursos-heading" class="py-20 sm:py-28 border-t border-accent/25">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <h2 id="recursos-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-2xl">
+        Centro de recursos.
+      </h2>
+      <p class="mt-4 text-white/70 max-w-2xl">Artículos técnicos y un glosario para equipos agroindustriales que evalúan plataformas de trazabilidad.</p>
+
+      <h3 class="mt-12 font-display font-semibold text-xl text-paper">Artículos técnicos</h3>
+      <div class="mt-6 space-y-4">
+
+        <details class="bracket bg-panel p-6">
+          <summary class="flex items-start justify-between gap-4">
+            <span>
+              <span class="font-display text-xs text-white/70 block">Trazabilidad · 5 min de lectura</span>
+              <span class="font-display font-semibold text-lg text-paper">Por qué cada mezcla decide el tamaño de un retiro</span>
+            </span>
+            <i class="chev fa-solid fa-chevron-down text-sand mt-2 transition-transform" aria-hidden="true"></i>
+          </summary>
+          <div class="mt-5 space-y-4 text-white/75 text-sm max-w-3xl">
+            <p>En una planta agroindustrial, mezclar materia prima de distintos orígenes es una necesidad productiva: permite cumplir calibre, color y porcentaje de defectos, y mantener la línea a plena capacidad. El problema aparece cuando la mezcla no queda registrada como una relación entre lotes. Desde ese punto, el lote resultante ya no puede vincularse con los cuarteles de donde provino.</p>
+            <p>La consecuencia se ve en los retiros. Si un turno de envasado combinó once lotes de proceso y no se sabe cuáles intervinieron en cada envase, el único retiro seguro es el de todo el turno. En la práctica, la mayor parte de lo retirado suele estar en perfectas condiciones: el costo no lo causa el defecto, sino la falta de información.</p>
+            <p>La solución es tratar la trazabilidad como un grafo. Cada recepción, proceso, mezcla y envasado es un nodo, y cada traspaso de producto es una arista con la cantidad involucrada. Cuando las proporciones no se pueden medir con exactitud, por ejemplo dentro de una cámara o una tolva, se estiman con balance de masa y tiempos de permanencia, y se informa el grado de confianza de esa estimación.</p>
+            <p>Con el grafo completo, una consulta recorre el árbol hacia atrás hasta los cuarteles de origen y hacia adelante hasta los envases despachados. El retiro se acota a lo que efectivamente comparte origen con el problema, y la respuesta al importador deja de tomar días.</p>
+          </div>
+        </details>
+
+        <details class="bracket bg-panel p-6">
+          <summary class="flex items-start justify-between gap-4">
+            <span>
+              <span class="font-display text-xs text-white/70 block">Arquitectura · 6 min de lectura</span>
+              <span class="font-display font-semibold text-lg text-paper">Offline-first en el huerto: 72 horas sin señal</span>
+            </span>
+            <i class="chev fa-solid fa-chevron-down text-sand mt-2 transition-transform" aria-hidden="true"></i>
+          </summary>
+          <div class="mt-5 space-y-4 text-white/75 text-sm max-w-3xl">
+            <p>En muchos campos la cobertura móvil es parcial o inexistente. Si la aplicación de terreno depende de la red, el aplicador vuelve al papel y el registro llega días después a una planilla. Ese desfase es el que expone a cosechar un cuartel en período de carencia.</p>
+            <p>Una aplicación offline-first invierte el supuesto: el dispositivo es la fuente primaria del registro y la red es solo un medio para sincronizar. Cada registro se guarda cifrado en una base local, con un identificador único generado en el propio dispositivo y su marca de tiempo. Así, el registro existe y es válido desde el momento de la aplicación.</p>
+            <p>La sincronización debe ser determinista. Cuando el dispositivo recupera señal, envía sus registros en orden; el servidor los acepta de forma idempotente, de modo que un reintento no duplica datos. Los conflictos, como dos cambios sobre el mismo cuartel, se resuelven con reglas explícitas y quedan registrados para auditoría.</p>
+            <p>El dimensionamiento importa: tres días de trabajo de un aplicador ocupan pocos megabytes, y sincronizarlos sobre un enlace débil toma menos de un minuto. Lo crítico no es el volumen, sino garantizar que nada se pierda si el dispositivo se apaga o se daña antes de sincronizar.</p>
+          </div>
+        </details>
+
+        <details class="bracket bg-panel p-6">
+          <summary class="flex items-start justify-between gap-4">
+            <span>
+              <span class="font-display text-xs text-white/70 block">Exportación · 4 min de lectura</span>
+              <span class="font-display font-semibold text-lg text-paper">Límites máximos de residuos: verificar antes de asignar el destino</span>
+            </span>
+            <i class="chev fa-solid fa-chevron-down text-sand mt-2 transition-transform" aria-hidden="true"></i>
+          </summary>
+          <div class="mt-5 space-y-4 text-white/75 text-sm max-w-3xl">
+            <p>Cada país de destino fija sus propios límites máximos de residuos (LMR) para cada combinación de producto y plaguicida. Un mismo lote puede ser legal en tres mercados y quedar fuera de norma en un cuarto. Si la asignación de destino se hace sin esa verificación, el error se descubre en el puerto de llegada y se paga por contenedor completo.</p>
+            <p>La verificación previa necesita tres piezas de información: las aplicaciones realizadas en cada cuartel de origen, los resultados de laboratorio del lote y una tabla de LMR vigente por mercado. La genealogía del lote es la que une las dos primeras: sin ella no se sabe qué aplicaciones afectan al producto que está por embarcarse.</p>
+            <p>Con esas piezas, un motor de reglas calcula la aptitud del lote para cada mercado antes del despacho. La decisión comercial sigue en manos de las personas, pero el sistema impide asignar un contenedor a un mercado donde el lote no es apto y muestra en cuáles sí lo es.</p>
+            <p>La tabla de LMR cambia con frecuencia, por lo que debe versionarse: cada evaluación queda asociada a la versión de la tabla con que se calculó, y así puede demostrarse ante un auditor por qué un lote se consideró apto en una fecha determinada.</p>
+          </div>
+        </details>
+
       </div>
-      <div class="bracket bg-panel p-7 flex flex-col gap-4">
-        <a href="mailto:empresatriplet@gmail.com" class="flex items-center gap-3 text-paper hover:text-white/80 transition-colors">
-          <i class="fa-solid fa-envelope text-accent" aria-hidden="true"></i>
-          empresatriplet@gmail.com
-        </a>
-        <p class="flex items-center gap-3 text-paper">
-          <i class="fa-solid fa-location-dot text-accent" aria-hidden="true"></i>
-          Pudeto 441, Valparaíso, Chile
-        </p>
-        <p class="flex items-center gap-3 text-paper">
-          <i class="fa-solid fa-globe text-accent" aria-hidden="true"></i>
-          https://triplet-bro.github.io/EmpresaTripleT/
-        </p>
+
+      <h3 class="mt-14 font-display font-semibold text-xl text-paper">Glosario</h3>
+      <dl class="mt-6 grid sm:grid-cols-2 gap-x-10 gap-y-5 text-sm">
+        <div><dt class="font-semibold text-paper">Período de carencia</dt><dd class="text-white/70 mt-1">Tiempo mínimo entre la última aplicación de un plaguicida y la cosecha.</dd></div>
+        <div><dt class="font-semibold text-paper">Límite máximo de residuos (LMR)</dt><dd class="text-white/70 mt-1">Concentración máxima de un residuo de plaguicida que un país admite en un alimento.</dd></div>
+        <div><dt class="font-semibold text-paper">Genealogía de lotes</dt><dd class="text-white/70 mt-1">Registro de qué lotes dieron origen a cada lote, incluidas las mezclas, que permite rastrear hacia atrás y hacia adelante.</dd></div>
+        <div><dt class="font-semibold text-paper">Offline-first</dt><dd class="text-white/70 mt-1">Diseño en que la aplicación funciona sin red y sincroniza cuando la conexión vuelve.</dd></div>
+        <div><dt class="font-semibold text-paper">RPO y RTO</dt><dd class="text-white/70 mt-1">Pérdida máxima de datos tolerada y tiempo máximo para restablecer un servicio tras un desastre.</dd></div>
+        <div><dt class="font-semibold text-paper">Zero Trust</dt><dd class="text-white/70 mt-1">Modelo de seguridad que verifica cada acceso sin confiar por defecto en la ubicación de red.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ ESTADO EN TIEMPO REAL ============ -->
+  <section id="estado" aria-labelledby="estado-heading" class="py-20 sm:py-28 border-t border-accent/25 bg-panel/25">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <h2 id="estado-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper max-w-2xl">
+        Estado de nuestros servicios en tiempo real.
+      </h2>
+      <p class="mt-4 text-white/70 max-w-3xl">Tu navegador consulta nuestro servicio web cada 30 segundos y muestra la disponibilidad y el tiempo de respuesta medidos. Los valores son mediciones reales, no cifras declaradas.</p>
+
+      <div class="mt-10 grid lg:grid-cols-[1.3fr_0.7fr] gap-6">
+        <div class="bracket bg-ink p-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="flex items-center gap-3 text-paper font-semibold">
+              <span id="st-dot" class="w-3 h-3 rounded-full bg-white/40 inline-block" aria-hidden="true"></span>
+              <span>Sitio y portal de clientes: <span id="st-status">midiendo…</span></span>
+            </p>
+            <button type="button" id="st-now" class="border border-accent/60 px-3 py-1.5 text-xs hover:border-paper">Medir ahora</button>
+          </div>
+          <dl class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-5" aria-live="polite">
+            <div><dt class="text-xs text-white/70">Última respuesta</dt><dd id="st-lat" class="font-display font-bold text-xl text-paper">—</dd></div>
+            <div><dt class="text-xs text-white/70">Percentil 95</dt><dd id="st-p95" class="font-display font-bold text-xl text-paper">—</dd></div>
+            <div><dt class="text-xs text-white/70">Disponibilidad medida</dt><dd id="st-avail" class="font-display font-bold text-xl text-paper">—</dd></div>
+            <div><dt class="text-xs text-white/70">Chequeos</dt><dd id="st-checks" class="font-display font-bold text-xl text-paper">0</dd></div>
+          </dl>
+          <svg id="st-spark" class="mt-6 w-full h-16" viewBox="0 0 200 40" preserveAspectRatio="none" role="img" aria-label="Tiempo de respuesta de los últimos chequeos">
+            <line x1="0" y1="39" x2="200" y2="39" stroke="rgba(157,98,60,0.5)" stroke-width="0.5"/>
+            <polyline id="st-line" fill="none" stroke="#D9A47C" stroke-width="1.5" points=""/>
+          </svg>
+          <p class="mt-2 text-xs text-white/70">Última actualización: <span id="st-time">—</span></p>
+        </div>
+
+        <div class="bracket bg-ink p-6">
+          <p class="font-display text-xs text-white/70">carga_de_esta_página</p>
+          <dl class="mt-4 space-y-4">
+            <div><dt class="text-xs text-white/70">Primer byte del servidor</dt><dd id="st-ttfb" class="font-display font-bold text-xl text-paper">—</dd></div>
+            <div><dt class="text-xs text-white/70">Página interactiva</dt><dd id="st-dom" class="font-display font-bold text-xl text-paper">—</dd></div>
+            <div><dt class="text-xs text-white/70">Carga completa</dt><dd id="st-load" class="font-display font-bold text-xl text-paper">—</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <h3 class="mt-12 font-display font-semibold text-xl text-paper">Niveles de servicio que comprometemos en operación</h3>
+      <div class="mt-5 overflow-x-auto">
+        <table class="tt w-full text-sm">
+          <caption class="sr-only">Niveles de servicio por severidad del incidente</caption>
+          <thead><tr><th scope="col">Indicador</th><th scope="col">Crítica</th><th scope="col">Alta</th><th scope="col">Media</th><th scope="col">Baja</th></tr></thead>
+          <tbody class="text-white/75">
+            <tr><th scope="row" class="font-normal text-paper">Disponibilidad mensual mínima</th><td>99,9 %</td><td>99,5 %</td><td>99,0 %</td><td>98,0 %</td></tr>
+            <tr><th scope="row" class="font-normal text-paper">Tiempo máximo de respuesta</th><td>15 minutos</td><td>1 hora</td><td>4 horas</td><td>8 horas</td></tr>
+            <tr><th scope="row" class="font-normal text-paper">Tiempo máximo de resolución</th><td>4 horas</td><td>8 horas</td><td>24 horas</td><td>48 horas</td></tr>
+            <tr><th scope="row" class="font-normal text-paper">Cobertura de atención</th><td>24×7×365</td><td>24×7×365</td><td>Horario hábil extendido</td><td>Horario hábil</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOPORTE Y CONTACTO ============ -->
+  <section id="contacto" aria-labelledby="contacto-heading" class="py-20 sm:py-28 border-t border-accent/25">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 id="contacto-heading" class="font-display font-bold text-3xl sm:text-4xl text-paper">
+            ¿Tu operación necesita un sistema que no se detenga?
+          </h2>
+          <p class="mt-4 text-white/70 max-w-md">
+            Cuéntanos el desafío de tu faena, planta o flota. Respondemos desde Valparaíso a todo Chile.
+          </p>
+        </div>
+        <div class="bracket bg-panel p-7 flex flex-col gap-4">
+          <a href="mailto:empresatriplet@gmail.com" class="flex items-center gap-3 text-paper hover:text-white/80 transition-colors">
+            <i class="fa-solid fa-envelope text-sand" aria-hidden="true"></i>
+            empresatriplet@gmail.com
+          </a>
+          <p class="flex items-center gap-3 text-paper">
+            <i class="fa-solid fa-location-dot text-sand" aria-hidden="true"></i>
+            Pudeto 443, 2362841 Valparaíso, Chile
+          </p>
+          <p class="flex items-center gap-3 text-paper break-all">
+            <i class="fa-solid fa-globe text-sand" aria-hidden="true"></i>
+            https://triplet-bro.github.io/EmpresaTripleT/
+          </p>
+        </div>
+      </div>
+
+      <!-- Portal de soporte -->
+      <div id="soporte" class="mt-16 grid lg:grid-cols-[0.8fr_1.2fr] gap-10">
+        <div>
+          <h3 class="font-display font-semibold text-2xl text-paper">Portal de soporte para clientes</h3>
+          <p class="mt-3 text-white/70">Si ya operas con una plataforma de Triple T, registra aquí tu solicitud. Se genera un número de ticket y se abre tu correo con la solicitud lista para enviar a nuestra mesa de ayuda.</p>
+          <ul class="mt-6 space-y-3 text-sm text-white/70">
+            <li><span class="text-paper font-semibold">Crítica:</span> interrupción total, proceso crítico sin alternativa o incidente de seguridad con compromiso de datos.</li>
+            <li><span class="text-paper font-semibold">Alta:</span> degradación severa, función crítica con alternativa costosa o un grupo relevante de usuarios afectado.</li>
+            <li><span class="text-paper font-semibold">Media:</span> falla de una función no crítica, con alternativa disponible.</li>
+            <li><span class="text-paper font-semibold">Baja:</span> consulta, incidencia menor o solicitud de información.</li>
+          </ul>
+        </div>
+
+        <form id="support-form" class="bracket bg-panel p-6 sm:p-7 grid sm:grid-cols-2 gap-4 text-sm" novalidate>
+          <div>
+            <label for="s-nombre" class="block text-white/80 mb-1">Nombre <span aria-hidden="true">*</span></label>
+            <input id="s-nombre" name="nombre" class="field" type="text" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="s-empresa" class="block text-white/80 mb-1">Empresa <span aria-hidden="true">*</span></label>
+            <input id="s-empresa" name="empresa" class="field" type="text" autocomplete="organization" required>
+          </div>
+          <div>
+            <label for="s-correo" class="block text-white/80 mb-1">Correo de contacto <span aria-hidden="true">*</span></label>
+            <input id="s-correo" name="correo" class="field" type="email" autocomplete="email" required>
+          </div>
+          <div>
+            <label for="s-sev" class="block text-white/80 mb-1">Severidad <span aria-hidden="true">*</span></label>
+            <select id="s-sev" name="severidad" class="field" required>
+              <option value="">Selecciona</option>
+              <option>Crítica</option>
+              <option>Alta</option>
+              <option>Media</option>
+              <option>Baja</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="s-asunto" class="block text-white/80 mb-1">Asunto <span aria-hidden="true">*</span></label>
+            <input id="s-asunto" name="asunto" class="field" type="text" required>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="s-desc" class="block text-white/80 mb-1">Descripción <span aria-hidden="true">*</span></label>
+            <textarea id="s-desc" name="descripcion" class="field" rows="4" required></textarea>
+          </div>
+          <p class="sm:col-span-2 text-xs text-white/70">Los campos con * son obligatorios. Tus datos se usan solo para atender la solicitud, conforme a la Ley N° 21.719.</p>
+          <div class="sm:col-span-2 flex flex-wrap items-center gap-4">
+            <button type="submit" class="bg-accent text-white font-semibold px-5 py-2.5 hover:bg-[#B5744A]">Generar ticket</button>
+            <p id="s-msg" class="text-paper" role="status" aria-live="polite"></p>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -444,10 +1236,10 @@
     </div>
     <div>
       <p class="font-display font-semibold text-paper">Tecnologías Triple T S.A.</p>
-      <p class="mt-2">RUT 67.676.767-K</p>
-      <p>Pudeto 441, Valparaíso, Chile</p>
+      <p class="mt-2">RUT 99.123.456-K</p>
+      <p>Pudeto 443, 2362841 Valparaíso, Chile</p>
       <p class="mt-2">
-        <a href="mailto:empresatriplet@gmail.com" class="hover:text-paper">empresatriplet@gmail.com</a>
+        <a href="mailto:empresatriplet@gmail.com" class="hover:text-paper underline">empresatriplet@gmail.com</a>
       </p>
     </div>
     <div class="sm:text-right">
@@ -456,15 +1248,24 @@
       <p class="mt-2">© <span id="year"></span> Tecnologías Triple T S.A. Todos los derechos reservados.</p>
     </div>
   </div>
+  <p class="max-w-6xl mx-auto px-5 sm:px-8 mt-8 text-xs text-white/70">Sitio elaborado para la licitación académica TFEP-01/2026 (PUCV). La empresa, sus clientes, testimonios, certificaciones y cifras son ficticios.</p>
 </footer>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Mobile menu toggle
+  // ---------- Menú móvil ----------
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = document.getElementById('menu-icon');
+
+  const closeMenu = () => {
+    mobileMenu.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Abrir menú de navegación');
+    menuIcon.classList.add('fa-bars');
+    menuIcon.classList.remove('fa-xmark');
+  };
 
   menuToggle.addEventListener('click', () => {
     const isOpen = mobileMenu.classList.toggle('hidden') === false;
@@ -473,45 +1274,148 @@
     menuIcon.classList.toggle('fa-bars', !isOpen);
     menuIcon.classList.toggle('fa-xmark', isOpen);
   });
+  document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) { closeMenu(); menuToggle.focus(); } });
 
-  // Close mobile menu after choosing a link
-  document.querySelectorAll('#mobile-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      menuToggle.setAttribute('aria-label', 'Abrir menú de navegación');
-      menuIcon.classList.add('fa-bars');
-      menuIcon.classList.remove('fa-xmark');
-    });
-  });
-
-  // Scroll-spy: visibilidad del estado del sistema (heurística de Nielsen)
-  const sections = ['nosotros', 'valores', 'proyectos', 'equipo', 'contacto']
+  // ---------- Scroll-spy: visibilidad del estado del sistema ----------
+  const sections = ['nosotros', 'capacidades', 'proyectos', 'solucion', 'equipo', 'recursos', 'estado', 'contacto']
     .map(id => document.getElementById(id))
     .filter(Boolean);
   const navLinks = document.querySelectorAll('[data-nav]');
-
   const setActive = (id) => {
     navLinks.forEach(link => {
       const isActive = link.getAttribute('href') === '#' + id;
       link.classList.toggle('nav-active', isActive);
-      if (isActive) {
-        link.setAttribute('aria-current', 'true');
-      } else {
-        link.removeAttribute('aria-current');
-      }
+      if (isActive) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
     });
   };
-
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActive(entry.target.id);
-      }
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); });
   }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-
   sections.forEach(section => observer.observe(section));
+
+  // ---------- Recorrido virtual ----------
+  const stepBtns = Array.from(document.querySelectorAll('.step-btn'));
+  const panels = Array.from(document.querySelectorAll('.tour-panel'));
+  let current = 0;
+  const showStep = (i) => {
+    current = (i + panels.length) % panels.length;
+    panels.forEach((p, k) => p.classList.toggle('hidden', k !== current));
+    stepBtns.forEach((b, k) => { if (k === current) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+  };
+  stepBtns.forEach((b, k) => b.addEventListener('click', () => showStep(k)));
+  document.getElementById('tour-prev').addEventListener('click', () => showStep(current - 1));
+  document.getElementById('tour-next').addEventListener('click', () => showStep(current + 1));
+  showStep(0);
+
+  // ---------- Estimador de retorno ----------
+  const clp = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
+  const num = (id) => { const v = parseFloat(document.getElementById(id).value); return isNaN(v) || v < 0 ? 0 : v; };
+  const calc = () => {
+    const rechazo = num('r-rech') * num('r-usd') * num('r-tc') * Math.min(num('r-red'), 100) / 100;
+    const retiro = num('r-ret') * num('r-ton') * num('r-val') * Math.min(num('r-conf'), 100) / 100;
+    const total = rechazo + retiro;
+    const inv = num('r-inv'), opex = num('r-opex'), anos = Math.max(1, Math.round(num('r-anos')) || 1);
+    document.getElementById('o-rech').textContent = clp.format(rechazo);
+    document.getElementById('o-ret').textContent = clp.format(retiro);
+    document.getElementById('o-total').textContent = clp.format(total);
+    const neto = total - opex;
+    if (inv > 0) {
+      const roi = (neto * anos - inv) / inv * 100;
+      document.getElementById('o-roi').textContent = roi.toLocaleString('es-CL', { maximumFractionDigits: 0 }) + ' % en ' + anos + (anos === 1 ? ' año' : ' años');
+      document.getElementById('o-pay').textContent = neto > 0 ? (inv / (neto / 12)).toLocaleString('es-CL', { maximumFractionDigits: 1 }) + ' meses' : 'No se recupera con estos valores';
+    } else {
+      document.getElementById('o-roi').textContent = 'Ingresa la inversión';
+      document.getElementById('o-pay').textContent = 'Ingresa la inversión';
+    }
+  };
+  document.getElementById('roi-form').addEventListener('input', calc);
+  document.getElementById('roi-form').addEventListener('submit', (e) => e.preventDefault());
+  calc();
+
+  // ---------- Portal de soporte ----------
+  const sForm = document.getElementById('support-form');
+  const sMsg = document.getElementById('s-msg');
+  sForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const invalid = Array.from(sForm.querySelectorAll('[required]')).find(f => !f.value.trim() || (f.type === 'email' && !f.checkValidity()));
+    sForm.querySelectorAll('[required]').forEach(f => f.setAttribute('aria-invalid', String(!f.value.trim() || (f.type === 'email' && !f.checkValidity()))));
+    if (invalid) {
+      sMsg.textContent = 'Revisa el campo «' + sForm.querySelector('label[for="' + invalid.id + '"]').textContent.replace('*', '').trim() + '».';
+      invalid.focus();
+      return;
+    }
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    const ticket = 'TT-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '-' + Math.floor(1000 + Math.random() * 9000);
+    const v = (id) => document.getElementById(id).value.trim();
+    const subject = '[' + ticket + '] Severidad ' + v('s-sev') + ': ' + v('s-asunto');
+    const body = 'Ticket: ' + ticket + '\nNombre: ' + v('s-nombre') + '\nEmpresa: ' + v('s-empresa') + '\nCorreo: ' + v('s-correo') + '\nSeveridad: ' + v('s-sev') + '\n\nDescripción:\n' + v('s-desc');
+    window.location.href = 'mailto:empresatriplet@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    sMsg.textContent = 'Ticket ' + ticket + ' generado. Envía el correo que se abrió para registrarlo.';
+  });
+
+  // ---------- Estado en tiempo real ----------
+  const st = { ok: 0, total: 0, lat: [] };
+  const $ = (id) => document.getElementById(id);
+  const ms = (v) => v == null ? '—' : Math.round(v).toLocaleString('es-CL') + ' ms';
+  const pct = (arr, p) => { if (!arr.length) return null; const s = [...arr].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.ceil(p / 100 * s.length) - 1)]; };
+  const canProbe = location.protocol === 'http:' || location.protocol === 'https:';
+
+  const setStatus = (ok) => {
+    const txt = ok === null ? 'no medible en modo local' : ok ? 'operativo' : 'sin respuesta';
+    $('st-status').textContent = txt;
+    $('hero-status').textContent = ok === null ? 'ver estado' : ok ? 'en línea' : 'sin respuesta';
+    $('st-dot').className = 'w-3 h-3 rounded-full inline-block ' + (ok ? 'bg-green-500' : ok === null ? 'bg-white/40' : 'bg-red-500');
+  };
+
+  const drawSpark = () => {
+    const pts = st.lat.slice(-30);
+    if (!pts.length) return;
+    const max = Math.max(...pts, 1);
+    const step = pts.length > 1 ? 200 / (pts.length - 1) : 0;
+    $('st-line').setAttribute('points', pts.map((v, i) => (i * step).toFixed(1) + ',' + (38 - v / max * 34).toFixed(1)).join(' '));
+  };
+
+  const probe = async () => {
+    if (!canProbe) { setStatus(null); return; }
+    const url = location.origin + location.pathname + '?estado=' + Date.now();
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 8000);
+    const t0 = performance.now();
+    let ok = false, lat = null;
+    try {
+      const r = await fetch(url, { method: 'HEAD', cache: 'no-store', signal: ctrl.signal });
+      lat = performance.now() - t0;
+      ok = r.ok;
+    } catch (err) { ok = false; }
+    clearTimeout(timer);
+    st.total++; if (ok) { st.ok++; st.lat.push(lat); }
+    setStatus(ok);
+    $('st-lat').textContent = ok ? ms(lat) : 'sin respuesta';
+    $('st-p95').textContent = ms(pct(st.lat, 95));
+    $('st-avail').textContent = (st.ok / st.total * 100).toLocaleString('es-CL', { maximumFractionDigits: 1 }) + ' %';
+    $('st-checks').textContent = st.total;
+    $('st-time').textContent = new Date().toLocaleTimeString('es-CL');
+    drawSpark();
+  };
+
+  let probeTimer = null;
+  const startProbes = () => { if (!probeTimer) probeTimer = setInterval(probe, 30000); };
+  const stopProbes = () => { clearInterval(probeTimer); probeTimer = null; };
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stopProbes(); else { probe(); startProbes(); } });
+  $('st-now').addEventListener('click', probe);
+  probe(); startProbes();
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+      if (!nav) return;
+      $('st-ttfb').textContent = ms(nav.responseStart - nav.requestStart);
+      $('st-dom').textContent = ms(nav.domInteractive);
+      $('st-load').textContent = ms(nav.loadEventEnd);
+    }, 0);
+  });
 </script>
 
 </body>
